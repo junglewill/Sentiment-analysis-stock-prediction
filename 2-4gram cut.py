@@ -6,7 +6,7 @@ import time
 from progressbar import *
 
 
-# 交換dictionary的key與value
+# switch the key and value in the dictionary
 def invert_dict(d):
     inv = dict()
     for key in d:
@@ -20,14 +20,14 @@ def invert_dict(d):
     return inv
 
 
-#  將數據寫入新文件
+#  write the data into a new file
 def data_write(file_name, vol, tf, df, i):
-    # 將數據寫入第 i 行，第 j 列
+    # write the data into row i and column j
     sheet1.write(i, 0, vol)
     sheet1.write(i, 1, tf)
     sheet1.write(i, 2, df)
 
-    # 保存文件
+    # save the file
     f.save(file_name)
 
 
@@ -47,23 +47,23 @@ pbar = ProgressBar().start()
 sheet = ["Foxconn", "Uni"]
 
 for k in range(len(sheet)):
-    # 讀取excel檔
+    # read the excel file
     df = pd.read_excel("/Users/leepinghsun/Desktop/bda2019_all_bbs.xlsx", sheet[k])
     df = pd.DataFrame(df)
 
-    # 創建excel檔
+    # create an excel file
     file_name = "bbs_all_" + sheet[k] + ".xls"
     f = xlwt.Workbook(encoding='utf-8')
-    # 創建sheet
+    # create sheet
     sheet1 = f.add_sheet(sheet[k])
     sheet1.write(0, 0, "詞")
     sheet1.write(0, 1, "tf")
     sheet1.write(0, 2, "df")
-    # 打開檔案
+    # open the file
     # file_name = "forum_output.xlsx"
     # wb = load_workbook(file_name)
 
-    # # 創建sheet
+    # # create sheet
     # wb.create_sheet(sheet[k])
 
     # sheets = wb.sheetnames
@@ -73,13 +73,13 @@ for k in range(len(sheet)):
     # wb[sheets[k]].cell(row = 1, column = 3).value = "df"
     # wb.save(file_name)
 
-    # 將標題與內容的文字存入csv
+    # append the data of title and content in csv 
     csv = []
     for index, row in df.iterrows():
         csv.append(str(row['title']) + str(row['title']) + str(row['content']) + '    ')
     csv.append("END")
 
-    # 中文斷詞
+    # don't want to count the stop words in Chinese
     stops = []
     with open('/Users/leepinghsun/Desktop/stops.txt', 'r', encoding='utf8') as f1:
         stops = f1.read().split('\n')
@@ -121,7 +121,7 @@ for k in range(len(sheet)):
                     else:
                         firstLetter += 1
                         n = 1
-            # 新的一篇新聞，df全部重算
+            # df is recounted in a new article
             for key, value in countTf.items():
                 value[1] = True
             index += 1
@@ -136,7 +136,7 @@ for k in range(len(sheet)):
     keyList_tf = inverted_tf.keys()
     for key in sorted(keyList_tf, reverse=True):
         inverted_tf[key].sort()
-        # 輸出前1000筆
+        # print the first 1000 words
         if counter >= 1000:
             break
         else:
