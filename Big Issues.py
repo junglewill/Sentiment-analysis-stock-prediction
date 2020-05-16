@@ -42,12 +42,12 @@ bbs_table=data_table(raw_bbs)
 forum_table=data_table(raw_forum)
 news_table=data_table(raw_news)
 
-#source放的是上面整理過的table
+#put the cleaned table in source
 def maketolist(source):
     temp=list(source["title"]+source["content"])
     return temp
 
-#date為日期的list, 輸出的是某個日期後面接(新聞的index)
+#date is a list, print out a date with the index of the news
 def find_date_index(date, source, index):
     idx={}
     for j in date:
@@ -58,7 +58,7 @@ def find_date_index(date, source, index):
         idx[j]=temp
     return idx
 
-#keywords放上面的list，source放的是maketolist的東西
+#keywords to save the list above, put the information wanted to maketolist in source
 def find_keyword_index(keyword, keyword_list, source):
     temp=[]
     for i in range(len(source)):
@@ -86,7 +86,7 @@ idx["bbstable_uni"]=find_keyword_index("uni", key_uni, maketolist(bbs_table))
 idx["forumtable_uni"]=find_keyword_index("uni", key_uni, maketolist(forum_table))
 idx["newstable_uni"]=find_keyword_index("uni", key_uni, maketolist(news_table))
 
-#某個日期的前兩天星聞，這邊的index是上面的func輸出後的某個日期的東西
+#the articles data 2 days before a certain date, the index here is for the date printed through the function above
 def get_data(source, index):
     result =pd.DataFrame(columns=('post_time','title','content'))
     for i in range(len(index)):
@@ -123,7 +123,7 @@ newstable_dead_foxconn_date_combine=combine_date(newstable_dead_foxconn_date)
 newstable_dead_uni_date_combine=combine_date(newstable_dead_uni_date)
 newstable_dead_TSMC_date_combine=combine_date(newstable_dead_TSMC_date)
 
-#合併所有dead_公司的新聞
+# combine all the dead_[company] news and forum data
 dead_foxconn=pd.concat([get_data(bbs_table, list(bbstable_dead_foxconn_date_combine)), get_data(forum_table, list(forumtable_dead_foxconn_date_combine)), get_data(news_table, list(newstable_dead_foxconn_date_combine))])
 
 dead_uni=pd.concat([get_data(bbs_table, list(bbstable_dead_uni_date_combine)), get_data(forum_table, list(forumtable_dead_uni_date_combine)), get_data(news_table, list(newstable_dead_uni_date_combine))])
@@ -158,7 +158,7 @@ newstable_rise_foxconn_date_combine=combine_date(newstable_rise_foxconn_date)
 newstable_rise_uni_date_combine=combine_date(newstable_rise_uni_date)
 newstable_rise_TSMC_date_combine=combine_date(newstable_rise_TSMC_date)
 
-#合併所有rise_公司的新聞
+# combine all the rise_[company] news and forum data
 rise_foxconn=pd.concat([get_data(bbs_table, list(bbstable_rise_foxconn_date_combine)), get_data(forum_table, list(forumtable_rise_foxconn_date_combine)), get_data(news_table, list(newstable_rise_foxconn_date_combine))])
 rise_uni=pd.concat([get_data(bbs_table, list(bbstable_rise_uni_date_combine)), get_data(forum_table, list(forumtable_rise_uni_date_combine)), get_data(news_table, list(newstable_rise_uni_date_combine))])
 rise_TSMC=pd.concat([get_data(bbs_table, list(bbstable_rise_TSMC_date_combine)), get_data(forum_table, list(forumtable_rise_TSMC_date_combine)), get_data(news_table, list(newstable_rise_TSMC_date_combine))])
@@ -171,7 +171,7 @@ rise_TSMC.to_csv("/Users/leepinghsun/Desktop/bda2019_dataset/rise_TSMC.csv")
 # In[31]:
 
 
-#全部合併的，沒有分公司
+# combine all, no company difference
 bbs_dead_idx=set()
 for i in bbstable_dead_foxconn_date:
     bbs_dead_idx=bbs_dead_idx|set(bbstable_dead_foxconn_date[i])
