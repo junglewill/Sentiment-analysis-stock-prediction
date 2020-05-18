@@ -24,6 +24,7 @@ def clean(source):
             temp.append(i)
     return temp
 
+# we chose the rise and decline terms used in part1
 dead_term = pd.read_csv("D:/USB/class/fourth/bigdata_analysis/bda2019_dataset/dead_keyword.csv", encoding= 'utf-8')
 rise_term = pd.read_csv("D:/USB/class/fourth/bigdata_analysis/bda2019_dataset/rise_keyword.csv", encoding= 'utf-8')
 dead_news = pd.read_csv("D:/USB/class/fourth/bigdata_analysis/bda2019_dataset/total_company_up & down/bda2019_mid_project_down.csv", encoding= 'utf-8')
@@ -44,7 +45,7 @@ for i, j in enumerate(term):
     word2id[j] = i
     id2word.append(j)
     
-#每篇data文章中，term中的出現次數
+#count the number of times term appear in each data sources (tf) 
 def data_tf(data, term):
     word2id = {}
     id2word = []
@@ -65,7 +66,7 @@ dtf=data_tf(dead_news, term)
 
 rtf=data_tf(rise_news, term)
 
-# 算每個字的df值
+# count the df value for each term
 def data_df(data, term):
     word2id = {}
     id2word = []
@@ -112,6 +113,7 @@ rise_y["results"]=1
 
 x_train, x_test, y_train, y_test=train_test_split(pd.concat([dead_x, rise_x]), pd.concat([dead_y, rise_y])[["results"]],test_size=0.2, random_state=0)
 
+# Random forest modeling
 forest = ensemble.RandomForestClassifier(n_estimators = 10)
 
 forest_fit = forest.fit(x_train, y_train.values)
@@ -188,7 +190,7 @@ def get_vec(total_vec, index):
         tmp.append(data_vec[i])
     return tmp
     
-#random forest的prediction
+#random forest prediction
 final_foxconn={}
 for time in news_bydate:
     if time!= datetime(2018,1,1) and time!=datetime(2018,1,2):
@@ -214,7 +216,7 @@ for time in news_bydate:
         else:
             final_foxconn[time]="n"
 
-#decisoin tree的prediction
+#decisoin tree prediction
 final_foxconn={}
 for time in news_bydate:    
     try:    
@@ -238,7 +240,7 @@ for time in news_bydate:
     else:
         final_foxconn[time]="n"
         
-#svm的prediction
+#SVM prediction
 final_foxconn={}
 for time in news_bydate:
     if time!= datetime(2018,1,1) and time!=datetime(2018,1,2):
@@ -277,20 +279,3 @@ t.to_csv("D:/USB/class/fourth/bigdata_analysis/bda2019_dataset/2018_data/uni_for
 
 t=pd.DataFrame({'post_time':date, 'predict_results':results})
 t.to_csv("D:/USB/class/fourth/bigdata_analysis/bda2019_dataset/2018_data/uni_decision-tree_predict_result.csv")
-
-#舊的
-dead_term = pd.read_csv("D:/USB/class/fourth/bigdata_analysis/bda2019_dataset/dead_keyword.csv", encoding= 'utf-8')
-rise_term = pd.read_csv("D:/USB/class/fourth/bigdata_analysis/bda2019_dataset/rise_keyword.csv", encoding= 'utf-8')
-dead_news = pd.read_csv("D:/USB/class/fourth/bigdata_analysis/bda2019_dataset/dead_news.csv", encoding= 'utf-8')
-rise_news = pd.read_csv("D:/USB/class/fourth/bigdata_analysis/bda2019_dataset/rise_news.csv", encoding= 'utf-8')
-
-data_vec={}
-for i in range(len(id2word)):
-    data_vec[id2word[i]]=data_dvec[i]
-    
-iris=datasets.load_iris()
-x=pd.DataFrame(iris["data"],columns=iris['feature_names'])
-y=pd.DataFrame(iris["target"], columns=["target"])
-iris_data=pd.concat([x,y],axis=1)
-iris_data=iris_data[["sepal length (cm)","petal length (cm)", "target"]]
-iris_data=iris_data[iris_data["target"].isin([0,1])]
