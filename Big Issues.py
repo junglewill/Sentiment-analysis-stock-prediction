@@ -1,8 +1,3 @@
-# coding: utf-8
-
-# In[1]:
-
-
 import math
 import pandas as pd
 import numpy as np
@@ -168,9 +163,6 @@ rise_uni.to_csv("/Users/leepinghsun/Desktop/bda2019_dataset/rise_uni.csv")
 rise_TSMC.to_csv("/Users/leepinghsun/Desktop/bda2019_dataset/rise_TSMC.csv")
 
 
-# In[31]:
-
-
 # combine all, no company difference
 bbs_dead_idx=set()
 for i in bbstable_dead_foxconn_date:
@@ -179,12 +171,9 @@ for i in bbstable_dead_uni_date:
     bbs_dead_idx=bbs_dead_idx|set(bbstable_dead_uni_date[i])
 for i in bbstable_dead_TSMC_date:
     bbs_dead_idx=bbs_dead_idx|set(bbstable_dead_TSMC_date[i])
-print(len(bbs_dead_idx))
+# print(len(bbs_dead_idx))
 bbs_dead_idx=list(bbs_dead_idx)
 bbs_dead=get_data(bbs_table, bbs_dead_idx)
-
-
-# In[32]:
 
 
 forum_dead_idx=set()
@@ -194,12 +183,9 @@ for i in forumtable_dead_uni_date:
     forum_dead_idx=forum_dead_idx|set(forumtable_dead_uni_date[i])
 for i in forumtable_dead_TSMC_date:
     forum_dead_idx=forum_dead_idx|set(forumtable_dead_TSMC_date[i])
-print(len(forum_dead_idx))
+# print(len(forum_dead_idx))
 forum_dead_idx=list(forum_dead_idx)
 forum_dead=get_data(forum_table, forum_dead_idx)
-
-
-# In[33]:
 
 
 news_dead_idx=set()
@@ -209,24 +195,15 @@ for i in newstable_dead_uni_date:
     news_dead_idx=news_dead_idx|set(newstable_dead_uni_date[i])
 for i in newstable_dead_TSMC_date:
     news_dead_idx=news_dead_idx|set(newstable_dead_TSMC_date[i])
-print(len(news_dead_idx))
+# print(len(news_dead_idx))
 news_dead_idx=list(news_dead_idx)
 news_dead=get_data(news_table, news_dead_idx)
-
-
-# In[17]:
 
 
 dead=pd.concat([news_dead,forum_dead, bbs_dead])
 
 
-# In[26]:
-
-
 dead.to_csv("/Users/leepinghsun/Desktop/bda2019_dataset/dead_news.csv")
-
-
-# In[20]:
 
 
 bbs_rise_idx=set()
@@ -236,12 +213,9 @@ for i in bbstable_rise_uni_date:
     bbs_rise_idx=bbs_rise_idx|set(bbstable_rise_uni_date[i])
 for i in bbstable_rise_TSMC_date:
     bbs_rise_idx=bbs_rise_idx|set(bbstable_rise_TSMC_date[i])
-print(len(bbs_rise_idx))
+# print(len(bbs_rise_idx))
 bbs_rise_idx=list(bbs_rise_idx)
 bbs_rise=get_data(bbs_table, bbs_rise_idx)
-
-
-# In[21]:
 
 
 forum_rise_idx=set()
@@ -251,12 +225,9 @@ for i in forumtable_rise_uni_date:
     forum_rise_idx=forum_rise_idx|set(forumtable_rise_uni_date[i])
 for i in forumtable_rise_TSMC_date:
     forum_rise_idx=forum_rise_idx|set(forumtable_rise_TSMC_date[i])
-print(len(forum_rise_idx))
+# print(len(forum_rise_idx))
 forum_rise_idx=list(forum_rise_idx)
 forum_rise=get_data(forum_table, forum_rise_idx)
-
-
-# In[22]:
 
 
 news_rise_idx=set()
@@ -266,24 +237,15 @@ for i in newstable_rise_uni_date:
     news_rise_idx=news_rise_idx|set(newstable_rise_uni_date[i])
 for i in newstable_rise_TSMC_date:
     news_rise_idx=news_rise_idx|set(newstable_rise_TSMC_date[i])
-print(len(news_rise_idx))
+# print(len(news_rise_idx))
 news_rise_idx=list(news_rise_idx)
 news_rise=get_data(news_table, news_rise_idx)
-
-
-# In[23]:
 
 
 rise=pd.concat([news_rise,forum_rise, bbs_rise])
 
 
-# In[25]:
-
 
 rise.to_csv("/Users/leepinghsun/Desktop/bda2019_dataset/rise_news.csv")
-
-
-# In[24]:
-
 
 len(rise)
