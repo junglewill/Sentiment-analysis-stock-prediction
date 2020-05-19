@@ -12,7 +12,7 @@ Train and test the news and forum data released before significant issues happen
 Simulate and backtest to optimize our performance (gain or loss) of long position in the market for the target stocks. 
 
 
-The dataset we used is the data of news and bbs (the largest public forum in Taiwan) from 2016 to 2018. The stocks we discussed include TSMC (2330.TW), Foxconn (2317.TW), and Uni-President (1216.TW). The programming language is Python.
+The datasets we used are the data of news and bbs (the largest public forum in Taiwan) from 2016 to 2018. The stocks we discussed include TSMC (2330.TW), Foxconn (2317.TW), and Uni-President (1216.TW). The programming language is Python.
 
 It was a group project created in the Big Data and Business Analytics course at National Taiwan University. I created labelled word lists and extracted the related data for the three target stocks, while my teammates covered most of the modeling parts at that time.
 
